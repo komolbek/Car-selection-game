@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">w1754980CarGame</string>
+    <string name="identify_the_car_make">Identify the Car Make</string>
+    <string name="advanced_level">Advanced level</string>
+    <string name="identify_the_car_image">Identify the Car Image</string>
+    <string name="countdown">Countdown</string>
+    <string name="hints">Hints</string>
 </resources>
