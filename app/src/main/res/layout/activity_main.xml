@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/carMakeIdentifyButton"
+        android:id="@+id/carIdentifyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/identify_the_car_make"
@@ -24,23 +24,23 @@
         android:layout_height="47dp"
         android:layout_marginTop="32dp"
         android:text="@string/hints"
-        app:layout_constraintBottom_toTopOf="@+id/carMakeImageButton"
-        app:layout_constraintEnd_toEndOf="@+id/carMakeIdentifyButton"
+        app:layout_constraintBottom_toTopOf="@+id/carImageButton"
+        app:layout_constraintEnd_toEndOf="@+id/carIdentifyButton"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/carMakeIdentifyButton"
-        app:layout_constraintTop_toBottomOf="@+id/carMakeIdentifyButton"
+        app:layout_constraintStart_toStartOf="@+id/carIdentifyButton"
+        app:layout_constraintTop_toBottomOf="@+id/carIdentifyButton"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/carMakeImageButton"
+        android:id="@+id/carImageButton"
         android:layout_width="225dp"
         android:layout_height="47dp"
         android:text="@string/identify_the_car_image"
         app:layout_constraintBottom_toTopOf="@+id/advancedLevelButton"
-        app:layout_constraintEnd_toEndOf="@+id/carMakeIdentifyButton"
+        app:layout_constraintEnd_toEndOf="@+id/carIdentifyButton"
         app:layout_constraintHorizontal_bias="0.714"
-        app:layout_constraintStart_toStartOf="@+id/carMakeIdentifyButton"
-        app:layout_constraintTop_toBottomOf="@+id/carMakeIdentifyButton"
+        app:layout_constraintStart_toStartOf="@+id/carIdentifyButton"
+        app:layout_constraintTop_toBottomOf="@+id/carIdentifyButton"
         app:layout_constraintVertical_bias="0.794" />
 
     <Button
@@ -49,10 +49,10 @@
         android:layout_height="47dp"
         android:text="@string/advanced_level"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/carMakeIdentifyButton"
+        app:layout_constraintEnd_toEndOf="@+id/carIdentifyButton"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/carMakeIdentifyButton"
-        app:layout_constraintTop_toBottomOf="@+id/carMakeIdentifyButton"
+        app:layout_constraintStart_toStartOf="@+id/carIdentifyButton"
+        app:layout_constraintTop_toBottomOf="@+id/carIdentifyButton"
         app:layout_constraintVertical_bias="0.824" />
 
     <Switch
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/countdown"
-        app:layout_constraintBottom_toTopOf="@+id/carMakeIdentifyButton"
+        app:layout_constraintBottom_toTopOf="@+id/carIdentifyButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

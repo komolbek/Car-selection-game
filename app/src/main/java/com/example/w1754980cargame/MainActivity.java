@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
 //    Private methods
 
     private void setupButtons() {
-        carMakeIndentifyButton = (Button) findViewById(R.id.carMakeIdentifyButton);
+        carMakeIndentifyButton = (Button) findViewById(R.id.carIdentifyButton);
         hintsButton = (Button) findViewById(R.id.hintsButton);
-        carMakeImageButton = (Button) findViewById(R.id.carMakeImageButton);
+        carMakeImageButton = (Button) findViewById(R.id.carImageButton);
         advancedLevelButton = (Button) findViewById(R.id.advancedLevelButton);
     }
 
@@ -63,22 +63,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openCarMakeIdentifyActivity() {
-        Intent intent = new Intent(this, CarMakeIdentifyActivity.class);
+        Intent intent = new Intent(MainActivity.this, CarMakeIdentifyActivity.class);
         startActivity(intent);
     }
 
     private void openHintsActivity() {
-        Intent intent = new Intent(this, HintsActivity.class);
+        Intent intent = new Intent(MainActivity.this, HintsActivity.class);
         startActivity(intent);
     }
 
     private void openCarMakeImageActivity() {
-        Intent intent = new Intent(this, CarImageIdentifyActivity.class);
+        Intent intent = new Intent(MainActivity.this, CarImageIdentifyActivity.class);
         startActivity(intent);
     }
 
     private void openAdvancedLevelActivity() {
-        Intent intent = new Intent(this, AdvancedLevelActivity.class);
+        Intent intent = new Intent(MainActivity.this, AdvancedLevelActivity.class);
         startActivity(intent);
     }
 }

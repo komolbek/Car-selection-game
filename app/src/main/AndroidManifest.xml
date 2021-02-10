@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.W1754980CarGame">
-        <activity android:name=".AdvancedLevelActivity"></activity>
+        <activity android:name=".AdvancedLevelActivity" />
         <activity android:name=".CarImageIdentifyActivity" />
         <activity android:name=".HintsActivity" />
         <activity android:name=".CarMakeIdentifyActivity" />

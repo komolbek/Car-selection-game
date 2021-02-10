@@ -13,7 +13,7 @@ public class AdvancedLevelActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_car_make_identify);
+        setContentView(R.layout.activity_advanced_level);
 
         setupButtons();
         setupButtonListeners();
