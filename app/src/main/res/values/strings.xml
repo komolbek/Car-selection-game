@@ -1,9 +1,43 @@
 <resources>
     <string name="app_name">w1754980CarGame</string>
+    <string-array name="names">
+        <item>Toyota</item>
+        <item>Honda</item>
+        <item>Chevrolet</item>
+        <item>Ford</item>
+        <item>Mercedes</item>
+        <item>Jeep</item>
+        <item>BMW</item>
+        <item>Porscche</item>
+        <item>Bugatti</item>
+        <item>Nissan</item>
+        <item>Cadillac</item>
+        <item>Volkswagen</item>
+        <item>Lexus</item>
+        <item>Audi</item>
+        <item>Ferrari</item>
+        <item>Volvo</item>
+        <item>Jaguar</item>
+        <item>Mini</item>
+        <item>Maseratti</item>
+        <item>Renault</item>
+        <item>Bentley</item>
+        <item>Dodge</item>
+        <item>Hyundai</item>
+        <item>Lincoln</item>
+        <item>Mazda</item>
+        <item>Land_rover</item>
+        <item>Tesla</item>
+        <item>Mitsubishi</item>
+        <item>Infinity</item>
+        <item>Kia</item>
+    </string-array>
     <string name="identify_the_car_make">Identify the Car Make</string>
     <string name="advanced_level">Advanced level</string>
     <string name="identify_the_car_image">Identify the Car Image</string>
     <string name="countdown">Countdown</string>
     <string name="hints">Hints</string>
     <string name="back">Back</string>
+    <string name="identify">Identify</string>
+    <string name="todo">TODO</string>
 </resources>

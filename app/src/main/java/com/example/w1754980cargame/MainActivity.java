@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.w1754980cargame.BusinessLogic.CarsManager;
+import com.example.w1754980cargame.Models.Car;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button carMakeIndentifyButton;
@@ -23,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setupButtonListeners();
     }
 
-//    Private methods
+    // Private methods
 
     private void setupButtons() {
         carMakeIndentifyButton = (Button) findViewById(R.id.carIdentifyButton);
