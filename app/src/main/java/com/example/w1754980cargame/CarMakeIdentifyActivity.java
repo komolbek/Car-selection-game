@@ -2,9 +2,8 @@ package com.example.w1754980cargame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,14 +15,19 @@ import com.example.w1754980cargame.BusinessLogic.CarsManager;
 public class CarMakeIdentifyActivity extends AppCompatActivity {
 
     private Button backButton;
+    private Button identifyButton;
     private Spinner spinner;
     private ImageView imageView;
-    private Resources res = getResources();
+
+    CarsManager carsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_make_identify);
+
+        carsManager = new CarsManager(CarMakeIdentifyActivity.this);
+        carsManager.createCars();
 
         setupButtons();
         setupButtonListeners();
@@ -35,6 +39,7 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
     // Private methods
 
     private void setupButtons() {
+        identifyButton = (Button) findViewById(R.id.carMakeIdentifyButton);
         backButton = findViewById(R.id.carIdentifyBackButton);
     }
 
@@ -43,6 +48,13 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        identifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setupCarImage();
             }
         });
     }
@@ -65,13 +77,20 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
     }
 
     private void setupCarImage() {
-        CarsManager carsManager = new CarsManager(CarMakeIdentifyActivity.this);
-        carsManager.createCars();
+        String carName = carsManager.getRandomCar().getName();
+        Log.e("INFO", carName);
 
-//        int resID = res.getIdentifier(
-//                carsManager.getRandomCar().getName() ,
-//                "drawable", getPackageName()
-//        );
-//        imageView.setImageResource(resID);
+        if (carName == null) {
+            Log.e("ERROR", "FINISHED");
+        }
+
+        int resID = getResources().getIdentifier(
+                carName,
+                "drawable",
+                getPackageName()
+        );
+        imageView.setImageResource(resID);
     }
+
+
 }

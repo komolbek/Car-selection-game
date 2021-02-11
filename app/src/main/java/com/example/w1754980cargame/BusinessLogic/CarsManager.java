@@ -1,6 +1,7 @@
 package com.example.w1754980cargame.BusinessLogic;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.w1754980cargame.Models.Car;
 import com.example.w1754980cargame.R;
@@ -35,6 +36,10 @@ public class CarsManager {
 
     public Car getRandomCar() {
         Car randomCar = cars.get(new Random().nextInt(cars.size()));
+
+        if (cars.isEmpty()) {
+            return null;
+        }
 
         if (usedCars.isEmpty()) {
             cars.remove(randomCar);
