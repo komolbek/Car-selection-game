@@ -7,6 +7,31 @@
     tools:context=".HintsActivity">
 
     <Button
+        android:id="@+id/hintsIdentifyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/identify"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carIdentifyImageView2"
+        app:layout_constraintVertical_bias="0.828" />
+
+    <ImageView
+        android:id="@+id/carIdentifyImageView2"
+        android:layout_width="418dp"
+        android:layout_height="265dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.197"
+        tools:srcCompat="@drawable/default_car" />
+
+    <Button
         android:id="@+id/hintsBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,4 +42,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.01" />
+
+    <TextView
+        android:id="@+id/hintsTextView"
+        android:layout_width="254dp"
+        android:layout_height="41dp"
+        android:background="#CDDC39"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carIdentifyImageView2"
+        app:layout_constraintVertical_bias="0.084" />
+
+    <EditText
+        android:id="@+id/carMakeLetterPlainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/car_make_name_letter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carIdentifyImageView2"
+        app:layout_constraintVertical_bias="0.367"
+        android:autofillHints="" />
 </androidx.constraintlayout.widget.ConstraintLayout>
