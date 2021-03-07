@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.w1754980cargame.BusinessLogic.CarsManager;
 
@@ -18,8 +22,14 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
     private Button identifyButton;
     private Spinner spinner;
     private ImageView imageView;
+    private TextView resultTextView;
+    private TextView resultCarNameTextView;
 
     CarsManager carsManager;
+
+    private String carNameInImage;
+    private String carNameSelectedInSpinner;
+    private Boolean isCarImageSet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +44,10 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
         setupSpinner();
         setupImageView();
         setupCarImage();
+        setupResultTextView();
     }
 
-    // Private methods
-
-    private void setupButtons() {
-        identifyButton = (Button) findViewById(R.id.carMakeIdentifyButton);
-        backButton = findViewById(R.id.carIdentifyBackButton);
-    }
+    // MAIN LOGIC METHODS
 
     private void setupButtonListeners() {
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -54,9 +60,58 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
         identifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setupCarImage();
+                Log.i("INFO", spinner.getSelectedItem().toString());
+                carNameSelectedInSpinner = spinner.getSelectedItem().toString().toLowerCase();
+
+                if (isCarImageSet) {
+                    compareSelectedCarAndCarInImage();
+                    return;
+                }
             }
         });
+    }
+
+    private void setupCarImage() {
+        String carName = carsManager.getRandomCar().getName();
+        Log.i("INFO", carName);
+
+        if (carName == null) {
+            Log.e("ERROR", "FINISHED");
+        }
+
+        this.carNameInImage = carName;
+
+        int resID = getResources().getIdentifier(
+                carName,
+                "drawable",
+                getPackageName()
+        );
+        imageView.setImageResource(resID);
+        this.isCarImageSet = true;
+    }
+
+    private void compareSelectedCarAndCarInImage() {
+        Log.e("ERROR", this.carNameInImage + " ->>> " + this.carNameSelectedInSpinner);
+        if (carNameSelectedInSpinner.equals(carNameInImage)) {
+            Log.i("INFO", "Car name is correct");
+
+            resultTextView.setText("CORRECT!");
+            resultCarNameTextView.setText(spinner.getSelectedItem().toString().toUpperCase());
+            resultTextView.setVisibility(View.VISIBLE);
+            resultCarNameTextView.setVisibility(View.VISIBLE);
+            resultTextView.setVisibility(View.VISIBLE);
+            
+            setupCarImage();
+        } else {
+            Log.e("ERROR", "Car name is not correct");
+        }
+    }
+
+//    SETUP UI ELEMENTS
+
+    private void setupButtons() {
+        identifyButton = (Button) findViewById(R.id.carMakeIdentifyButton);
+        backButton = findViewById(R.id.carIdentifyBackButton);
     }
 
     private void setupSpinner() {
@@ -76,21 +131,11 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.carIdentifyImageView);
     }
 
-    private void setupCarImage() {
-        String carName = carsManager.getRandomCar().getName();
-        Log.e("INFO", carName);
+    private void setupResultTextView() {
+        resultTextView = findViewById(R.id.carMakeResultTextView);
+        resultTextView.setVisibility(View.INVISIBLE);
+        resultCarNameTextView = findViewById(R.id.resultCarNameTextView);
+        resultCarNameTextView.setVisibility(View.INVISIBLE);
 
-        if (carName == null) {
-            Log.e("ERROR", "FINISHED");
-        }
-
-        int resID = getResources().getIdentifier(
-                carName,
-                "drawable",
-                getPackageName()
-        );
-        imageView.setImageResource(resID);
     }
-
-
 }
