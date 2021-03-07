@@ -31,6 +31,7 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
     private String carNameInImage;
     private String carNameSelectedInSpinner;
     private Boolean isCarImageSet = false;
+    private Boolean isCarSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,7 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
             resultTextView.setVisibility(View.VISIBLE);
             resultCarNameTextView.setVisibility(View.VISIBLE);
 
-            setupCarImage();
+            isCarSelected = true;
         } else {
             Log.e("ERROR", "Car name is not correct");
 
@@ -111,6 +112,15 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
             resultCarNameTextView.setText(spinner.getSelectedItem().toString().toUpperCase());
             resultTextView.setVisibility(View.VISIBLE);
             resultCarNameTextView.setVisibility(View.VISIBLE);
+
+            isCarSelected = false;
+        }
+
+        if (isCarSelected) {
+            setupCarImage();
+            resultTextView.setVisibility(View.INVISIBLE);
+            resultCarNameTextView.setVisibility(View.INVISIBLE);
+            isCarSelected = false;
         }
     }
 
