@@ -61,6 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        tools:ignore="LabelFor"
         android:inputType="textPersonName"
         android:text="@string/car_make_name_letter"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -70,4 +71,23 @@
         app:layout_constraintTop_toBottomOf="@+id/carIdentifyImageView2"
         app:layout_constraintVertical_bias="0.367"
         android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/hintsResultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carIdentifyImageView2" />
+
+    <TextView
+        android:id="@+id/hintsResultCarTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.608" />
 </androidx.constraintlayout.widget.ConstraintLayout>

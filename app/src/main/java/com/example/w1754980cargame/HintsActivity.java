@@ -5,10 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.example.w1754980cargame.BusinessLogic.CarsManager;
 
 public class HintsActivity extends AppCompatActivity {
 
-    Button backButton;
+    private Button backButton;
+
+    private Button identifyButton;
+    private ImageView imageView;
+    private TextView resultTextView;
+    private TextView resultCarNameTextView;
+
+    CarsManager carsManager;
+
+    private String carNameInImage;
+    private String carNameSelectedInSpinner;
+    private Boolean isCarImageSet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
