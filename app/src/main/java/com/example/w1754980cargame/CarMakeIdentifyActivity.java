@@ -2,6 +2,7 @@ package com.example.w1754980cargame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -96,14 +97,20 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
             Log.i("INFO", "Car name is correct");
 
             resultTextView.setText("CORRECT!");
+            resultTextView.setTextColor(Color.GREEN);
             resultCarNameTextView.setText(spinner.getSelectedItem().toString().toUpperCase());
             resultTextView.setVisibility(View.VISIBLE);
             resultCarNameTextView.setVisibility(View.VISIBLE);
-            resultTextView.setVisibility(View.VISIBLE);
-            
+
             setupCarImage();
         } else {
             Log.e("ERROR", "Car name is not correct");
+
+            resultTextView.setText("NOT CORRECT!");
+            resultTextView.setTextColor(Color.RED);
+            resultCarNameTextView.setText(spinner.getSelectedItem().toString().toUpperCase());
+            resultTextView.setVisibility(View.VISIBLE);
+            resultCarNameTextView.setVisibility(View.VISIBLE);
         }
     }
 
