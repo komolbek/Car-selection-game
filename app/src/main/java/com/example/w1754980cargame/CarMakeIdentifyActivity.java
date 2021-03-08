@@ -81,6 +81,14 @@ public class CarMakeIdentifyActivity extends BaseActivity { // OOP. Inheritance
         }
     }
 
+    private void prepareViewForNextCarImage() {
+        identifyButton.setText("Identify");
+        resultCarNameTextView.setText("");
+        resultCarNameTextView.setVisibility(View.INVISIBLE);
+        hideCorrectMessage();
+        setupNextCarImage();
+    }
+
 //    SETUP UI ELEMENTS
 
     private void setupButtonListeners() {
@@ -101,9 +109,7 @@ public class CarMakeIdentifyActivity extends BaseActivity { // OOP. Inheritance
                     showCorrectMessage();
 
                     if (identifyButton.getText().equals("NEXT")) {
-                        identifyButton.setText("Identify");
-                        hideCorrectMessage();
-                        setupNextCarImage();
+                        prepareViewForNextCarImage();
                     } else {
                         identifyButton.setText("NEXT");
                     }
