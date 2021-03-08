@@ -40,12 +40,12 @@ public class HintsActivity extends AppCompatActivity {
         setupButtons();
         setupImageView();
         setupTextViews();
-        setupCarImage();
+        setupNextCarImage();
     }
 
     // MAIN LOGIC METHODS
 
-    private void setupCarImage() {
+    private void setupNextCarImage() {
         String carName = carsManager.getRandomCar().getName();
         Log.i("INFO", carName);
 
@@ -69,7 +69,7 @@ public class HintsActivity extends AppCompatActivity {
         hintsFinalTextView.setTextColor(Color.BLACK);
     }
 
-    private void checkIfCarNameContainsInputChar() {
+    private void checkIfCarNameContainsInputChar() { // FIXME: need to change method name
         // https://stackoverflow.com/questions/4531396/get-value-of-a-edit-text-field
         Character inputChar =  hintsCarLetterEditText.getText().toString().toLowerCase().charAt(0);
 
@@ -115,7 +115,7 @@ public class HintsActivity extends AppCompatActivity {
         hiddenText.setLength(0);
         identifyButton.setText("IDENTIFY");
         hideCorrectMessage();
-        setupCarImage();
+        setupNextCarImage();
     }
 
     private void showErrorText(String text) {
@@ -143,29 +143,7 @@ public class HintsActivity extends AppCompatActivity {
 
     // UI Setup mathods
 
-    private void setupTextViews() {
-        resultTextView = findViewById(R.id.hintsResultTextView);
-        resultTextView.setVisibility(View.INVISIBLE);
-        resultCarNameTextView = findViewById(R.id.hintsResultCarTextView);
-        resultCarNameTextView.setVisibility(View.INVISIBLE);
-        hintsCarLetterEditText = findViewById(R.id.carMakeLetterEditText);
-        hintsCarLetterEditText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(1)});
-        hintsFinalTextView = findViewById(R.id.hintsTextView);
-    }
-
-    private void setupImageView() {
-        imageView = (ImageView) findViewById(R.id.hintsCarImageView);
-    }
-
     private void setupButtons() {
-        backButton = findViewById(R.id.hintsBackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         identifyButton = findViewById(R.id.hintsIdentifyButton);
         identifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,5 +174,27 @@ public class HintsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        backButton = findViewById(R.id.hintsBackButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void setupTextViews() {
+        resultTextView = findViewById(R.id.hintsResultTextView);
+        resultTextView.setVisibility(View.INVISIBLE);
+        resultCarNameTextView = findViewById(R.id.hintsResultCarTextView);
+        resultCarNameTextView.setVisibility(View.INVISIBLE);
+        hintsCarLetterEditText = findViewById(R.id.carMakeLetterEditText);
+        hintsCarLetterEditText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(1)});
+        hintsFinalTextView = findViewById(R.id.hintsTextView);
+    }
+
+    private void setupImageView() {
+        imageView = (ImageView) findViewById(R.id.hintsCarImageView);
     }
 }
