@@ -12,12 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.w1754980cargame.BusinessLogic.CarsManager;
-import com.example.w1754980cargame.Models.Car;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class CarImageIdentifyActivity extends AppCompatActivity {
@@ -35,10 +31,7 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
 
     CarsManager carsManager;
 
-    // Is used while checking the clicked imageView type and that imageView is licked to carName which makes easier for compare logic
-    HashMap<String, ImageView> carNamesMap = new HashMap<String, ImageView>(3);
-
-    // Is used to get random name from three created cars. P.S. did not find a solution to get random key from HashMap itself
+    ArrayList<ImageView> imageViewsList = new ArrayList<ImageView>(3);
     ArrayList<String> carNamesList = new ArrayList<String>(3);
 
     @Override
@@ -57,25 +50,19 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
 
     // MAIN LOGIC METHODS
     @Nullable
-    private String getCorrespondingCarNameFromClickedImage(View v) { // FIXME: refactor hardcores later
-        for (Map.Entry<String, ImageView> carNameMapObject : carNamesMap.entrySet()) {
-            ImageView tempImageView = (ImageView) carNameMapObject.getValue();
+    private Integer getCorrespondingCarNameIndexFromClickedImage(ImageView v) {
+        int selectedImageViewID = v.getId();
 
-            if (tempImageView.equals(imageView1)) {
-                Log.i("INFO", "MATCHED!!! SELECTED CAR NAME IS: " + carNameMapObject.getKey());
+        for (int i = 0; i < imageViewsList.size(); i++) {
 
-                return carNamesList.get(0);
-            } else if (tempImageView.equals(imageView2)) {
-                Log.i("INFO", "MATCHED!!! SELECTED CAR NAME IS: " + carNameMapObject.getKey());
+            if (imageViewsList.get(i).getId() == selectedImageViewID) {
+                Log.i("INFO", "TAG OF MATCHED IMAGEVIEW IS: " + imageViewsList.get(i).getId());
 
-                return carNamesList.get(1);
-            } else if (tempImageView.equals(imageView3)) {
-                Log.i("INFO", "MATCHED!!! SELECTED CAR NAME IS: " + carNameMapObject.getKey());
-
-                return carNamesList.get(2);
+                return i;
             }
         }
-        return null;
+
+        return  null;
     }
 
     private void showErrorText() {
@@ -103,9 +90,6 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
         String carName2 = carsManager.getRandomCar().getName();
         String carName3 = carsManager.getRandomCar().getName();
 
-        carNamesMap.put(carName1, imageView1);
-        carNamesMap.put(carName2, imageView2);
-        carNamesMap.put(carName3, imageView3);
         carNamesList.add(carName1);
         carNamesList.add(carName2);
         carNamesList.add(carName3);
@@ -138,6 +122,10 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
                 getPackageName()
         );
         imageView3.setImageResource(imageFromResources_3);
+
+        imageViewsList.add(imageView1);
+        imageViewsList.add(imageView2);
+        imageViewsList.add(imageView3);
     }
 
     private void prepareViewToShowNextImages() {
@@ -146,7 +134,10 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
         hideErrorText();
         carNameToGuess = "";
         this.carNamesList.clear();
-        carNamesMap.clear();
+        Log.i("INFO", "CARNAMES AFTER CLEAN: " + carNamesList.size());
+        this.imageViewsList.clear();
+        Log.i("INFO", "IMAGEVIEWS AFTER CLEAN: " + imageViewsList.size());
+
         setupNextCarImage();
     }
 
@@ -166,14 +157,18 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("INFO", "IMAGEVIEW 1 CLICKED");
 
-                String selectedCarName = getCorrespondingCarNameFromClickedImage(v);
+                int selectedCarNameIndex = getCorrespondingCarNameIndexFromClickedImage(imageView1);
+                String selectedCarName = carNamesList.get(selectedCarNameIndex);
                 Log.i("INFO", "MATCHED!!! RETURNED CAR NAME IS: " + selectedCarName);
 
-                if (selectedCarName == carNameToGuess) {
-                    showCorrectMessage();
-                } else {
-                    showErrorText();
+                if (selectedCarName != null) {
+                    if (selectedCarName == carNameToGuess) {
+                        showCorrectMessage();
+                    } else {
+                        showErrorText();
+                    }
                 }
+
                 identifyButton.setText("NEXT");
             }
         });
@@ -183,13 +178,16 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("INFO", "IMAGEVIEW 2 CLICKED");
 
-                String selectedCarName = getCorrespondingCarNameFromClickedImage(v);
+                int selectedCarNameIndex = getCorrespondingCarNameIndexFromClickedImage(imageView2);
+                String selectedCarName = carNamesList.get(selectedCarNameIndex);
                 Log.i("INFO", "MATCHED!!! RETURNED CAR NAME IS: " + selectedCarName);
 
-                if (selectedCarName == carNameToGuess) {
-                    showCorrectMessage();
-                } else {
-                    showErrorText();
+                if (selectedCarName != null) {
+                    if (selectedCarName == carNameToGuess) {
+                        showCorrectMessage();
+                    } else {
+                        showErrorText();
+                    }
                 }
                 identifyButton.setText("NEXT");
             }
@@ -200,13 +198,16 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("INFO", "IMAGEVIEW 3 CLICKED");
 
-                String selectedCarName = getCorrespondingCarNameFromClickedImage(v);
+                int selectedCarNameIndex = getCorrespondingCarNameIndexFromClickedImage(imageView3);
+                String selectedCarName = carNamesList.get(selectedCarNameIndex);
                 Log.i("INFO", "MATCHED!!! RETURNED CAR NAME IS: " + selectedCarName);
 
-                if (selectedCarName == carNameToGuess) {
-                    showCorrectMessage();
-                } else {
-                    showErrorText();
+                if (selectedCarName != null) {
+                    if (selectedCarName == carNameToGuess) {
+                        showCorrectMessage();
+                    } else {
+                        showErrorText();
+                    }
                 }
                 identifyButton.setText("NEXT");
             }
