@@ -15,11 +15,12 @@ public class HintsActivity extends BaseActivity { // OOP. Inheritance
 
     private ImageView imageView;
     private TextView resultCarNameTextView;
-    private EditText hintsCarLetterEditText;
-    private TextView hintsFinalTextView;
+    private EditText carCharacterAddTextField;
+    private TextView dashedTextView;
+    private int attemptsCount = 3;
 
-    String shownCarName;
-    StringBuilder hiddenText = new StringBuilder("");
+    String carNameStringOfDisplayedImage;
+    StringBuilder dashedText = new StringBuilder("");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,47 +56,46 @@ public class HintsActivity extends BaseActivity { // OOP. Inheritance
                     getPackageName()
             );
             imageView.setImageResource(resID);
-            shownCarName = carName;
+            carNameStringOfDisplayedImage = carName;
 
             for (int i = 0; i < carName.length(); i++) {
-                hiddenText.append("-");
+                dashedText.append("-");
             }
-            Log.e("ERROR", hiddenText.toString());
-            hintsFinalTextView.setText(hiddenText.toString());
-            hintsFinalTextView.setTextColor(Color.BLACK);
+            Log.e("ERROR", dashedText.toString());
+            dashedTextView.setText(dashedText.toString());
+            dashedTextView.setTextColor(Color.BLACK);
         } else {
             showFinishedText("GAME IS FINISHED");
             return;
         }
     }
 
-    private void checkIfCarNameContainsInputChar() { // FIXME: need to change method name
+    private boolean openDashedCharacterIfMatchesWithUserInput() { // FIXME: maybe change method name
         // https://stackoverflow.com/questions/4531396/get-value-of-a-edit-text-field
-        Character inputChar =  hintsCarLetterEditText.getText().toString().toLowerCase().charAt(0);
+        Character userInputCharacter =  carCharacterAddTextField.getText().toString().toLowerCase().charAt(0);
 
-        if (shownCarName.contains(inputChar.toString())) {
-            for (int i = 0; i < shownCarName.length(); i++) {
-                Log.i("INFO", "CAR NAME: " + shownCarName + " <---> INPUT: " + inputChar);
+        if (carNameStringOfDisplayedImage.contains(userInputCharacter.toString())) {
+            for (int i = 0; i < carNameStringOfDisplayedImage.length(); i++) {
+                Log.i("INFO", "CAR NAME: " + carNameStringOfDisplayedImage + " <---> INPUT: " + userInputCharacter);
 
-                if (shownCarName.charAt(i) == inputChar) {
-                    Log.i("INFO", "MATCHED!!! INPUT: " + inputChar + " <---> with CARNAME: " + shownCarName);
+                if (carNameStringOfDisplayedImage.charAt(i) == userInputCharacter) {
+                    Log.i("INFO", "MATCHED!!! INPUT: " + userInputCharacter + " <---> with CARNAME: " + carNameStringOfDisplayedImage);
 
                     //https://stackoverflow.com/questions/6952363/replace-a-character-at-a-specific-index-in-a-string
-                    hiddenText.setCharAt(i, inputChar);
-                    hintsFinalTextView.setText(hiddenText);
-                    hintsCarLetterEditText.setText("");
+                    dashedText.setCharAt(i, userInputCharacter);
+                    dashedTextView.setText(dashedText);
+                    carCharacterAddTextField.setText("");
                 }
             }
-        } else {
-            Log.e("ERROR", "CAR NAME DOES NOT CONTAIN THIS INPUT LETTER");
 
-            showErrorText("TRY ANOTHER LETTER!");
-            hintsCarLetterEditText.setText("");
+            return true;
+        } else {
+            return false;
         }
     }
 
-    private boolean checkIfFinishedGuessing() {
-        if (hiddenText.toString().contains("-")) {
+    private boolean checkIfFinishedGuessingCarName() {
+        if (dashedText.toString().contains("-")) {
             return false;
         } else {
             return true;
@@ -103,7 +103,7 @@ public class HintsActivity extends BaseActivity { // OOP. Inheritance
     }
 
     private boolean checkIfInputContainsChar() {
-        if (hintsCarLetterEditText.getText().length() > 0) {
+        if (carCharacterAddTextField.getText().length() > 0) {
             return true;
         } else {
             return  false;
@@ -111,8 +111,9 @@ public class HintsActivity extends BaseActivity { // OOP. Inheritance
     }
 
     private void prepareViewToShowNextImage() {
-        hintsCarLetterEditText.setEnabled(true);
-        hiddenText.setLength(0);
+        carCharacterAddTextField.setEnabled(true);
+        dashedText.setLength(0);
+        attemptsCount = 3;
         identifyButton.setText("IDENTIFY");
         hideCorrectMessage();
         setupNextCarImage();
@@ -129,18 +130,36 @@ public class HintsActivity extends BaseActivity { // OOP. Inheritance
 
                 hideErrorText();
 
-                if (!checkIfFinishedGuessing()) {
+                if (!checkIfFinishedGuessingCarName()) {
                     if (checkIfInputContainsChar()) {
 
-                        checkIfCarNameContainsInputChar();
+                        if (openDashedCharacterIfMatchesWithUserInput()) {
 
-                        if (checkIfFinishedGuessing()) {
+                        } else {
+                            Log.e("ERROR", "CAR NAME DOES NOT CONTAIN THIS INPUT LETTER");
+
+                            if (attemptsCount > 0 && attemptsCount != 0) {
+                                attemptsCount -= 1;
+                                showErrorText("TRY ANOTHER LETTER! ONLY " + attemptsCount + " ATTEMPTS LEFT");
+                                carCharacterAddTextField.setText("");
+                            } else {
+                                if (identifyButton.getText().equals("NEXT")) {
+                                    prepareViewToShowNextImage();
+                                } else {
+                                    carCharacterAddTextField.setEnabled(false);
+                                    identifyButton.setText("NEXT");
+                                    showErrorText("WRONG! NO ATTEMPTS LEFT. PRESS NEXT");
+                                }
+                            }
+                        }
+
+                        if (checkIfFinishedGuessingCarName()) {
                             if (identifyButton.getText().equals("NEXT")) {
                                 prepareViewToShowNextImage();
                             } else {
                                 showCorrectMessage();
                                 identifyButton.setText("NEXT");
-                                hintsCarLetterEditText.setEnabled(false);
+                                carCharacterAddTextField.setEnabled(false);
                             }
                         }
                     } else {
@@ -166,9 +185,9 @@ public class HintsActivity extends BaseActivity { // OOP. Inheritance
         resultTextView.setVisibility(View.INVISIBLE);
         resultCarNameTextView = findViewById(R.id.hintsResultCarTextView);
         resultCarNameTextView.setVisibility(View.INVISIBLE);
-        hintsCarLetterEditText = findViewById(R.id.carMakeLetterEditText);
-        hintsCarLetterEditText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(1)});
-        hintsFinalTextView = findViewById(R.id.hintsTextView);
+        carCharacterAddTextField = findViewById(R.id.carMakeLetterEditText);
+        carCharacterAddTextField.setFilters(new InputFilter[] {new InputFilter.LengthFilter(1)});
+        dashedTextView = findViewById(R.id.hintsTextView);
     }
 
     private void setupImageView() {
