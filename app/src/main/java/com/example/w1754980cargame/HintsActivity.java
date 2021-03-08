@@ -111,6 +111,7 @@ public class HintsActivity extends AppCompatActivity {
     private void prepareViewToShowNextImage() {
         hintsCarLetterEditText.setEnabled(true);
         hiddenText.setLength(0);
+        identifyButton.setText("IDENTIFY");
         hideCorrectMessage();
         setupCarImage();
     }
@@ -128,7 +129,7 @@ public class HintsActivity extends AppCompatActivity {
     private void showCorrectMessage() {
         resultTextView.setText("CORRECT! CLICK 'NEXT' FOR NEXT CHALLENGE");
         resultTextView.setTextColor(Color.GREEN);
-        resultCarNameTextView.setText(shownCarName);
+        resultCarNameTextView.setText(shownCarName.toUpperCase());
         resultTextView.setVisibility(View.VISIBLE);
         resultCarNameTextView.setVisibility(View.VISIBLE);
     }
