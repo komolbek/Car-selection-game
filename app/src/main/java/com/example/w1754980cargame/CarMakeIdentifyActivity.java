@@ -20,8 +20,6 @@ public class CarMakeIdentifyActivity extends BaseActivity { // OOP. Inheritance
 
     private String carNameInImage;
     private String carNameSelectedInSpinner;
-    private Boolean isCarImageSet = false;
-    private Boolean isCarSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,35 +34,13 @@ public class CarMakeIdentifyActivity extends BaseActivity { // OOP. Inheritance
         setupButtonListeners();
         setupSpinner();
         setupImageView();
-        setupCarImage();
+        setupNextCarImage();
         setupResultTextView();
     }
 
     // MAIN LOGIC METHODS
 
-    private void setupButtonListeners() {
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        identifyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("INFO", spinner.getSelectedItem().toString());
-                carNameSelectedInSpinner = spinner.getSelectedItem().toString().toLowerCase();
-
-                if (isCarImageSet) {
-                    compareSelectedCarAndCarInImage();
-                    return;
-                }
-            }
-        });
-    }
-
-    private void setupCarImage() {
+    private void setupNextCarImage() {
         if (carsLeft != 0) {
             carsLeft -= 1;
 
@@ -83,46 +59,60 @@ public class CarMakeIdentifyActivity extends BaseActivity { // OOP. Inheritance
                     getPackageName()
             );
             imageView.setImageResource(resID);
-            this.isCarImageSet = true;
         } else {
             showFinishedText("Game IS FINISHED");
             return;
         }
     }
 
-    private void compareSelectedCarAndCarInImage() {
+    private boolean checkIfSelectedCarAndCarInImageMatches() {
         Log.e("ERROR", this.carNameInImage + " ->>> " + this.carNameSelectedInSpinner);
         if (carNameSelectedInSpinner.equals(carNameInImage)) {
             Log.i("INFO", "Car name is correct");
 
-            resultTextView.setText("CORRECT!");
-            resultTextView.setTextColor(Color.GREEN);
             resultCarNameTextView.setText(spinner.getSelectedItem().toString().toUpperCase());
-            resultTextView.setVisibility(View.VISIBLE);
             resultCarNameTextView.setVisibility(View.VISIBLE);
 
-            isCarSelected = true;
+            return true;
         } else {
             Log.e("ERROR", "Car name is not correct");
 
-            resultTextView.setText("NOT CORRECT!");
-            resultTextView.setTextColor(Color.RED);
-            resultCarNameTextView.setText(spinner.getSelectedItem().toString().toUpperCase());
-            resultTextView.setVisibility(View.VISIBLE);
-            resultCarNameTextView.setVisibility(View.VISIBLE);
-
-            isCarSelected = false;
-        }
-
-        if (isCarSelected) {
-            setupCarImage();
-            resultTextView.setVisibility(View.INVISIBLE);
-            resultCarNameTextView.setVisibility(View.INVISIBLE);
-            isCarSelected = false;
+            return false;
         }
     }
 
 //    SETUP UI ELEMENTS
+
+    private void setupButtonListeners() {
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        identifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("INFO", spinner.getSelectedItem().toString());
+                carNameSelectedInSpinner = spinner.getSelectedItem().toString().toLowerCase();
+
+                if (checkIfSelectedCarAndCarInImageMatches()) {
+                    showCorrectMessage();
+
+                    if (identifyButton.getText().equals("NEXT")) {
+                        identifyButton.setText("Identify");
+                        hideCorrectMessage();
+                        setupNextCarImage();
+                    } else {
+                        identifyButton.setText("NEXT");
+                    }
+                } else {
+                    showErrorText("WRONG! TRY AGAIN!");
+                }
+            }
+        });
+    }
 
     private void setupButtons() {
         identifyButton = (Button) findViewById(R.id.carMakeIdentifyButton);

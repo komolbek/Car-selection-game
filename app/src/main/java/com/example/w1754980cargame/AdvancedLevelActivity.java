@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.w1754980cargame.BusinessLogic.CarsManager;
 
@@ -22,6 +23,8 @@ public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
     private EditText thirdCarNameEditText;
 
     private int attemptsCount = 3;
+    private TextView scoreTextView;
+    private int score = 0;
 
     ArrayList<String> carNamesList = new ArrayList<String>(3);
 
@@ -109,18 +112,30 @@ public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
             if (!carNamesList.contains(firstCarNameEditText.getText().toString().toLowerCase())) {
                 firstCarNameEditText.setHighlightColor(Color.RED);
             } else {
+                if (firstCarNameEditText.isEnabled()) {
+                    score += 1;
+                    scoreTextView.setText("Score: " + score);
+                }
                 firstCarNameEditText.setEnabled(false);
             }
 
             if (!carNamesList.contains(secondCarNameEditText.getText().toString().toLowerCase())) {
                 secondCarNameEditText.setHighlightColor(Color.RED);
             } else {
+                if (secondCarNameEditText.isEnabled()) {
+                    score += 1;
+                    scoreTextView.setText("Score: " + 1);
+                }
                 secondCarNameEditText.setEnabled(false);
             }
 
             if (!carNamesList.contains(thirdCarNameEditText.getText().toString().toLowerCase())) {
                 thirdCarNameEditText.setHighlightColor(Color.RED);
             } else {
+                if (thirdCarNameEditText.isEnabled()) {
+                    score += 1;
+                    scoreTextView.setText("Score: " + score);
+                }
                 thirdCarNameEditText.setEnabled(false);
             }
 
@@ -213,6 +228,8 @@ public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
     }
 
     private void setupTextViews() {
+        scoreTextView = findViewById(R.id.advancedLvlPointsTextView);
+        scoreTextView.setText("Score: " + score);
         resultTextView = findViewById(R.id.advancedLvlResultTextView);
         resultTextView.setVisibility(View.INVISIBLE);
         firstCarNameEditText = findViewById(R.id.advancedLvlEditText1);
