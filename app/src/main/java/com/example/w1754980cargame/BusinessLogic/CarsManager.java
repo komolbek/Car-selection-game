@@ -35,6 +35,7 @@ public class CarsManager {
     }
 
     public Car getRandomCar() {
+        // https://stackoverflow.com/questions/21726033/picking-a-random-item-from-an-array-of-strings-in-java/21726085
         Car randomCar = cars.get(new Random().nextInt(cars.size()));
 
         if (cars.isEmpty()) {

@@ -2,6 +2,7 @@ package com.example.w1754980cargame.Models;
 
 public class Car {
 
+    private long id;
     private String name;
     private String image;
 
