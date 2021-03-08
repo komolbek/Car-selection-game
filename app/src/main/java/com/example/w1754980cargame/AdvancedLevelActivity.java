@@ -24,7 +24,7 @@ public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
 
     private int attemptsCount = 3;
     private TextView scoreTextView;
-    private int score = 0; // FIXME: need to fix
+    private int score = 0; // FIXME: need to fix 6 mar
 
     ArrayList<String> carNamesList = new ArrayList<String>(3);
 
@@ -93,7 +93,7 @@ public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
         Log.i("INFO", "SECOND CAR NAME: " + carNamesList.get(1) + " AND INPUT TEXT: " + secondCarNameEditText.getText());
         Log.i("INFO", "THIRD CAR NAME: " + carNamesList.get(2) + " AND INPUT TEXT: " + thirdCarNameEditText.getText());
 
-//        st.replaceAll("\\s+","") // TODO: to avoid all 'extra space' from user input. stackoverflow.com
+//        st.replaceAll("\\s+","") // TODO: to avoid all 'extra space' from user input. stackoverflow.com 20 feb
 
         if ((carNamesList.contains(firstCarNameEditText.getText().toString().toLowerCase())
                 && carNamesList.contains(secondCarNameEditText.getText().toString().toLowerCase())

@@ -70,7 +70,7 @@ public class HintsActivity extends BaseActivity { // OOP. Inheritance
         }
     }
 
-    private boolean openDashedCharacterIfMatchesWithUserInput() { // FIXME: maybe change method name
+    private boolean openDashedCharacterIfMatchesWithUserInput() {
         // https://stackoverflow.com/questions/4531396/get-value-of-a-edit-text-field
         Character userInputCharacter =  carCharacterAddTextField.getText().toString().toLowerCase().charAt(0);
 

@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private Button hintsButton;
     private Button carMakeImageButton;
     private Button advancedLevelButton;
+    // TODO: implement switch button functionality 27 feb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
