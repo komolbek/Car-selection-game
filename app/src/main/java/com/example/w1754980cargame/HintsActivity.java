@@ -70,6 +70,7 @@ public class HintsActivity extends AppCompatActivity {
     }
 
     private void checkIfCarNameContainsInputChar() {
+        // https://stackoverflow.com/questions/4531396/get-value-of-a-edit-text-field
         Character inputChar =  hintsCarLetterEditText.getText().toString().toLowerCase().charAt(0);
 
         if (shownCarName.contains(inputChar.toString())) {
@@ -79,6 +80,7 @@ public class HintsActivity extends AppCompatActivity {
                 if (shownCarName.charAt(i) == inputChar) {
                     Log.i("INFO", "MATCHED!!! INPUT: " + inputChar + " <---> with CARNAME: " + shownCarName);
 
+                    //https://stackoverflow.com/questions/6952363/replace-a-character-at-a-specific-index-in-a-string
                     hiddenText.setCharAt(i, inputChar);
                     hintsFinalTextView.setText(hiddenText);
                     hintsCarLetterEditText.setText("");
