@@ -24,7 +24,7 @@ public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
 
     private int attemptsCount = 3;
     private TextView scoreTextView;
-    private int score = 0;
+    private int score = 0; // FIXME: need to fix
 
     ArrayList<String> carNamesList = new ArrayList<String>(3);
 
@@ -93,7 +93,7 @@ public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
         Log.i("INFO", "SECOND CAR NAME: " + carNamesList.get(1) + " AND INPUT TEXT: " + secondCarNameEditText.getText());
         Log.i("INFO", "THIRD CAR NAME: " + carNamesList.get(2) + " AND INPUT TEXT: " + thirdCarNameEditText.getText());
 
-//        st.replaceAll("\\s+","")/
+//        st.replaceAll("\\s+","") // TODO: to avoid all 'extra space' from user input. stackoverflow.com
 
         if ((carNamesList.contains(firstCarNameEditText.getText().toString().toLowerCase())
                 && carNamesList.contains(secondCarNameEditText.getText().toString().toLowerCase())
@@ -111,6 +111,8 @@ public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
 
             if (!carNamesList.contains(firstCarNameEditText.getText().toString().toLowerCase())) {
                 firstCarNameEditText.setHighlightColor(Color.RED);
+                score += 3;
+                scoreTextView.setText("Score: " + score);
             } else {
                 if (firstCarNameEditText.isEnabled()) {
                     score += 1;
@@ -124,7 +126,7 @@ public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
             } else {
                 if (secondCarNameEditText.isEnabled()) {
                     score += 1;
-                    scoreTextView.setText("Score: " + 1);
+                    scoreTextView.setText("Score: " + score);
                 }
                 secondCarNameEditText.setEnabled(false);
             }
@@ -208,6 +210,9 @@ public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
                                 prepareViewToShowNextImages();
                             } else {
                                 identifyButton.setText("NEXT");
+                                firstCarNameEditText.setEnabled(false);
+                                secondCarNameEditText.setEnabled(false);
+                                thirdCarNameEditText.setEnabled(false);
                                 showErrorText("WRONG! NO ATTEMPTS LEFT. PRESS NEXT");
                             }
                         }
