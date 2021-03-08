@@ -1,33 +1,21 @@
 package com.example.w1754980cargame;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.w1754980cargame.BusinessLogic.CarsManager;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class AdvancedLevelActivity extends AppCompatActivity {
+public class AdvancedLevelActivity extends BaseActivity { // OOP. Inheritance.
 
-    private Button backButton;
-
-    private Button identifyButton;
     private ImageView imageView1;
     private ImageView imageView2;
     private ImageView imageView3;
-    private TextView resultTextView;
 
     private EditText firstCarNameEditText;
     private EditText secondCarNameEditText;
@@ -35,7 +23,6 @@ public class AdvancedLevelActivity extends AppCompatActivity {
 
     private int attemptsCount = 3;
 
-    CarsManager carsManager;
     ArrayList<String> carNamesList = new ArrayList<String>(3);
 
     @Override
@@ -45,6 +32,7 @@ public class AdvancedLevelActivity extends AppCompatActivity {
 
         carsManager = new CarsManager(AdvancedLevelActivity.this);
         carsManager.createCars();
+        carsLeft = carsManager.getCars().size();
 
         setupButtons();
         setupTextViews();
@@ -55,37 +43,44 @@ public class AdvancedLevelActivity extends AppCompatActivity {
     // MAIN LOGIC METHODS
 
     private void setupNextCarImage() {
-        String carName1 = carsManager.getRandomCar().getName();
-        String carName2 = carsManager.getRandomCar().getName();
-        String carName3 = carsManager.getRandomCar().getName();
-        carNamesList.add(carName1);
-        carNamesList.add(carName2);
-        carNamesList.add(carName3);
+        if (carsLeft != 0) {
+            carsLeft -= 3;
 
-        if ((carName1 == null) && (carName2 == null) && (carName3 == null)) {
-            Log.e("ERROR", "FINISHED!!! NO CARS LEFT IN TO USE");
+            String carName1 = carsManager.getRandomCar().getName();
+            String carName2 = carsManager.getRandomCar().getName();
+            String carName3 = carsManager.getRandomCar().getName();
+            carNamesList.add(carName1);
+            carNamesList.add(carName2);
+            carNamesList.add(carName3);
+
+            if ((carName1 == null) && (carName2 == null) && (carName3 == null)) {
+                Log.e("ERROR", "FINISHED!!! NO CARS LEFT IN TO USE");
+            }
+
+            int imageFromResources_1 = getResources().getIdentifier(
+                    carName1,
+                    "drawable",
+                    getPackageName()
+            );
+            imageView1.setImageResource(imageFromResources_1);
+
+            int imageFromResources_2 = getResources().getIdentifier(
+                    carName2,
+                    "drawable",
+                    getPackageName()
+            );
+            imageView2.setImageResource(imageFromResources_2);
+
+            int imageFromResources_3 = getResources().getIdentifier(
+                    carName3,
+                    "drawable",
+                    getPackageName()
+            );
+            imageView3.setImageResource(imageFromResources_3);
+        } else {
+            showFinishedText("GAME IS FINISHED");
+            return;
         }
-
-        int imageFromResources_1 = getResources().getIdentifier(
-                carName1,
-                "drawable",
-                getPackageName()
-        );
-        imageView1.setImageResource(imageFromResources_1);
-
-        int imageFromResources_2 = getResources().getIdentifier(
-                carName2,
-                "drawable",
-                getPackageName()
-        );
-        imageView2.setImageResource(imageFromResources_2);
-
-        int imageFromResources_3 = getResources().getIdentifier(
-                carName3,
-                "drawable",
-                getPackageName()
-        );
-        imageView3.setImageResource(imageFromResources_3);
     }
 
     private boolean checkIfInputsAreCorrect() {
@@ -95,15 +90,39 @@ public class AdvancedLevelActivity extends AppCompatActivity {
         Log.i("INFO", "SECOND CAR NAME: " + carNamesList.get(1) + " AND INPUT TEXT: " + secondCarNameEditText.getText());
         Log.i("INFO", "THIRD CAR NAME: " + carNamesList.get(2) + " AND INPUT TEXT: " + thirdCarNameEditText.getText());
 
-        if ((carNamesList.contains(firstCarNameEditText.getText().toString())
-                && carNamesList.contains(secondCarNameEditText.getText().toString())
-                && carNamesList.contains(thirdCarNameEditText.getText().toString())))
+//        st.replaceAll("\\s+","")/
+
+        if ((carNamesList.contains(firstCarNameEditText.getText().toString().toLowerCase())
+                && carNamesList.contains(secondCarNameEditText.getText().toString().toLowerCase())
+                && carNamesList.contains(thirdCarNameEditText.getText().toString().toLowerCase())))
         {
             Log.i("INFO", "ALL INPUTS PASSED");
+
+            firstCarNameEditText.setEnabled(false);
+            secondCarNameEditText.setEnabled(false);
+            thirdCarNameEditText.setEnabled(false);
 
             return true;
         } else {
             Log.i("INFO", "INPUTS ARE NOT PASSED");
+
+            if (!carNamesList.contains(firstCarNameEditText.getText().toString().toLowerCase())) {
+                firstCarNameEditText.setHighlightColor(Color.RED);
+            } else {
+                firstCarNameEditText.setEnabled(false);
+            }
+
+            if (!carNamesList.contains(secondCarNameEditText.getText().toString().toLowerCase())) {
+                secondCarNameEditText.setHighlightColor(Color.RED);
+            } else {
+                secondCarNameEditText.setEnabled(false);
+            }
+
+            if (!carNamesList.contains(thirdCarNameEditText.getText().toString().toLowerCase())) {
+                thirdCarNameEditText.setHighlightColor(Color.RED);
+            } else {
+                thirdCarNameEditText.setEnabled(false);
+            }
 
             return false;
         }
@@ -117,29 +136,9 @@ public class AdvancedLevelActivity extends AppCompatActivity {
         Log.i("INFO", "THIRD CAR NAME: " + carNamesList.get(2) + " AND INPUT TEXT: " + thirdCarNameEditText.getText());
 
         if (firstCarNameEditText.length() > 0 && secondCarNameEditText.length() > 0 && thirdCarNameEditText.length() > 0) {
-            firstCarNameEditText.setEnabled(false);
-            secondCarNameEditText.setEnabled(false);
-            thirdCarNameEditText.setEnabled(false);
 
             return true;
         } else {
-            if (firstCarNameEditText.length() == 0) {
-                firstCarNameEditText.setHighlightColor(Color.RED);
-            } else {
-                firstCarNameEditText.setEnabled(false);
-            }
-
-            if (secondCarNameEditText.length() == 0){
-                secondCarNameEditText.setHighlightColor(Color.RED);
-            } else {
-                secondCarNameEditText.setEnabled(false);
-            }
-
-            if (thirdCarNameEditText.length() == 0) {
-                thirdCarNameEditText.setHighlightColor(Color.RED);
-            } else {
-                thirdCarNameEditText.setEnabled(false);
-            }
 
             return false;
         }
@@ -150,35 +149,22 @@ public class AdvancedLevelActivity extends AppCompatActivity {
         hideCorrectMessage();
         hideErrorText();
         this.carNamesList.clear();
+        attemptsCount = 3;
         Log.i("INFO", "CARNAMES AFTER CLEAN: " + carNamesList.size());
-        refreshTextFieldsHintText();
+        refreshTextFieldsTexts();
         setupNextCarImage();
     }
 
-    private void refreshTextFieldsHintText() {
+    private void refreshTextFieldsTexts() {
+        firstCarNameEditText.setEnabled(true);
+        secondCarNameEditText.setEnabled(true);
+        thirdCarNameEditText.setEnabled(true);
         firstCarNameEditText.setHint("Type first car name");
         secondCarNameEditText.setHint("Type second car name");
         thirdCarNameEditText.setHint("Type third car name");
-    }
-
-    private void showErrorText(String text) {
-        resultTextView.setText(text);
-        resultTextView.setTextColor(Color.RED);
-        resultTextView.setVisibility(View.VISIBLE);
-    }
-
-    private void hideErrorText() {
-        resultTextView.setVisibility(View.INVISIBLE);
-    }
-
-    private void showCorrectMessage() {
-        resultTextView.setText("CORRECT! CLICK 'NEXT' FOR NEXT CHALLENGE");
-        resultTextView.setTextColor(Color.GREEN);
-        resultTextView.setVisibility(View.VISIBLE);
-    }
-
-    private void hideCorrectMessage() {
-        resultTextView.setVisibility(View.INVISIBLE);
+        firstCarNameEditText.setText("");
+        secondCarNameEditText.setText("");
+        thirdCarNameEditText.setText("");
     }
 
 // UI Setup mathods
@@ -199,11 +185,16 @@ public class AdvancedLevelActivity extends AppCompatActivity {
                             showCorrectMessage();
                         }
                     } else {
-                        if (attemptsCount > 0) {
+                        if (attemptsCount > 0 && attemptsCount != 0) {
                             attemptsCount -= 1;
                             showErrorText("WRONG! NEED TO FIX! ONLY " + attemptsCount + " ATTEMPTS LEFT");
                         } else {
-                            // go next with wrong
+                            if (identifyButton.getText() == "NEXT") {
+                                prepareViewToShowNextImages();
+                            } else {
+                                identifyButton.setText("NEXT");
+                                showErrorText("WRONG! NO ATTEMPTS LEFT. PRESS NEXT");
+                            }
                         }
                     }
                 } else {

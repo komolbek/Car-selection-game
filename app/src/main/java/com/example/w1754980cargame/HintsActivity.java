@@ -1,31 +1,23 @@
 package com.example.w1754980cargame;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.w1754980cargame.BusinessLogic.CarsManager;
 
-public class HintsActivity extends AppCompatActivity {
+public class HintsActivity extends BaseActivity { // OOP. Inheritance
 
-    private Button backButton;
-
-    private Button identifyButton;
     private ImageView imageView;
-    private TextView resultTextView;
     private TextView resultCarNameTextView;
     private EditText hintsCarLetterEditText;
     private TextView hintsFinalTextView;
 
-    CarsManager carsManager;
     String shownCarName;
     StringBuilder hiddenText = new StringBuilder("");
 
@@ -36,6 +28,7 @@ public class HintsActivity extends AppCompatActivity {
 
         carsManager = new CarsManager(HintsActivity.this);
         carsManager.createCars();
+        carsLeft = carsManager.getCars().size();
 
         setupButtons();
         setupImageView();
@@ -46,27 +39,34 @@ public class HintsActivity extends AppCompatActivity {
     // MAIN LOGIC METHODS
 
     private void setupNextCarImage() {
-        String carName = carsManager.getRandomCar().getName();
-        Log.i("INFO", carName);
+        if (carsLeft != 0) {
+            carsLeft -= 1;
 
-        if (carName == null) {
-            Log.e("ERROR", "FINISHED");
+            String carName = carsManager.getRandomCar().getName();
+            Log.i("INFO", carName);
+
+            if (carName == null) {
+                Log.e("ERROR", "FINISHED");
+            }
+
+            int resID = getResources().getIdentifier(
+                    carName,
+                    "drawable",
+                    getPackageName()
+            );
+            imageView.setImageResource(resID);
+            shownCarName = carName;
+
+            for (int i = 0; i < carName.length(); i++) {
+                hiddenText.append("-");
+            }
+            Log.e("ERROR", hiddenText.toString());
+            hintsFinalTextView.setText(hiddenText.toString());
+            hintsFinalTextView.setTextColor(Color.BLACK);
+        } else {
+            showFinishedText("GAME IS FINISHED");
+            return;
         }
-
-        int resID = getResources().getIdentifier(
-                carName,
-                "drawable",
-                getPackageName()
-        );
-        imageView.setImageResource(resID);
-        shownCarName = carName;
-
-        for (int i = 0; i < carName.length(); i++) {
-            hiddenText.append("-");
-        }
-        Log.e("ERROR", hiddenText.toString());
-        hintsFinalTextView.setText(hiddenText.toString());
-        hintsFinalTextView.setTextColor(Color.BLACK);
     }
 
     private void checkIfCarNameContainsInputChar() { // FIXME: need to change method name
@@ -116,29 +116,6 @@ public class HintsActivity extends AppCompatActivity {
         identifyButton.setText("IDENTIFY");
         hideCorrectMessage();
         setupNextCarImage();
-    }
-
-    private void showErrorText(String text) {
-        resultTextView.setText(text);
-        resultTextView.setTextColor(Color.RED);
-        resultTextView.setVisibility(View.VISIBLE);
-    }
-
-    private void hideErrorText() {
-        resultTextView.setVisibility(View.INVISIBLE);
-    }
-
-    private void showCorrectMessage() {
-        resultTextView.setText("CORRECT! CLICK 'NEXT' FOR NEXT CHALLENGE");
-        resultTextView.setTextColor(Color.GREEN);
-        resultCarNameTextView.setText(shownCarName.toUpperCase());
-        resultTextView.setVisibility(View.VISIBLE);
-        resultCarNameTextView.setVisibility(View.VISIBLE);
-    }
-
-    private void hideCorrectMessage() {
-        resultTextView.setVisibility(View.INVISIBLE);
-        resultCarNameTextView.setVisibility(View.INVISIBLE);
     }
 
     // UI Setup mathods

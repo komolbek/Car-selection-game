@@ -1,32 +1,22 @@
 package com.example.w1754980cargame;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.w1754980cargame.BusinessLogic.CarsManager;
 
-public class CarMakeIdentifyActivity extends AppCompatActivity {
+public class CarMakeIdentifyActivity extends BaseActivity { // OOP. Inheritance
 
-    private Button backButton;
-    private Button identifyButton;
     private Spinner spinner;
     private ImageView imageView;
-    private TextView resultTextView;
     private TextView resultCarNameTextView;
-
-    CarsManager carsManager;
 
     private String carNameInImage;
     private String carNameSelectedInSpinner;
@@ -40,6 +30,7 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
 
         carsManager = new CarsManager(CarMakeIdentifyActivity.this);
         carsManager.createCars();
+        carsLeft = carsManager.getCars().size();
 
         setupButtons();
         setupButtonListeners();
@@ -74,22 +65,29 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
     }
 
     private void setupCarImage() {
-        String carName = carsManager.getRandomCar().getName();
-        Log.i("INFO", carName);
+        if (carsLeft != 0) {
+            carsLeft -= 1;
 
-        if (carName == null) {
-            Log.e("ERROR", "FINISHED");
+            String carName = carsManager.getRandomCar().getName();
+            Log.i("INFO", carName);
+
+            if (carName == null) {
+                Log.e("ERROR", "FINISHED");
+            }
+
+            this.carNameInImage = carName;
+
+            int resID = getResources().getIdentifier(
+                    carName,
+                    "drawable",
+                    getPackageName()
+            );
+            imageView.setImageResource(resID);
+            this.isCarImageSet = true;
+        } else {
+            showFinishedText("Game IS FINISHED");
+            return;
         }
-
-        this.carNameInImage = carName;
-
-        int resID = getResources().getIdentifier(
-                carName,
-                "drawable",
-                getPackageName()
-        );
-        imageView.setImageResource(resID);
-        this.isCarImageSet = true;
     }
 
     private void compareSelectedCarAndCarInImage() {
