@@ -44,4 +44,7 @@
     <string name="resultCarTextView">TextView</string>
     <string name="car_make_name_letter">Car make name Letter</string>
     <string name="click_image_that_is">Click image that is:</string>
+    <string name="type_first_car_name">Type first car name</string>
+    <string name="type_second_car_name">Type second car name</string>
+    <string name="type_third_car_name">Type third car name</string>
 </resources>

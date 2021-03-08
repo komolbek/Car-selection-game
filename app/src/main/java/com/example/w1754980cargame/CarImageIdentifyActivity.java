@@ -49,6 +49,7 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
     }
 
     // MAIN LOGIC METHODS
+
     @Nullable
     private Integer getCorrespondingCarNameIndexFromClickedImage(ImageView v) {
         int selectedImageViewID = v.getId();
@@ -138,6 +139,10 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
         this.imageViewsList.clear();
         Log.i("INFO", "IMAGEVIEWS AFTER CLEAN: " + imageViewsList.size());
 
+        imageView1.setEnabled(true);
+        imageView2.setEnabled(true);
+        imageView3.setEnabled(true);
+
         setupNextCarImage();
     }
 
@@ -168,7 +173,7 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
                         showErrorText();
                     }
                 }
-
+                imageView1.setEnabled(false);
                 identifyButton.setText("NEXT");
             }
         });
@@ -189,6 +194,7 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
                         showErrorText();
                     }
                 }
+                imageView2.setEnabled(false);
                 identifyButton.setText("NEXT");
             }
         });
@@ -209,6 +215,7 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
                         showErrorText();
                     }
                 }
+                imageView3.setEnabled(false);
                 identifyButton.setText("NEXT");
             }
         });
