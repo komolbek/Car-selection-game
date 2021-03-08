@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.example.w1754980cargame.BusinessLogic.CarsManager;
 import com.example.w1754980cargame.Models.Car;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -32,8 +34,12 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
     private String carNameToGuess;
 
     CarsManager carsManager;
+
+    // Is used while checking the clicked imageView type and that imageView is licked to carName which makes easier for compare logic
     HashMap<String, ImageView> carNamesMap = new HashMap<String, ImageView>(3);
-    String[] carNames = new String[3];
+
+    // Is used to get random name from three created cars. P.S. did not find a solution to get random key from HashMap itself
+    ArrayList<String> carNamesList = new ArrayList<String>(3);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +49,30 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
         carsManager = new CarsManager(CarImageIdentifyActivity.this);
         carsManager.createCars();
 
-        setupListeners();
         setupImageView();
         setupTextViews();
+        setupListeners();
         setupNextCarImage();
     }
 
     // MAIN LOGIC METHODS
     @Nullable
-    private String getCorrespondingCarNameFromClickedImage(View v) {
+    private String getCorrespondingCarNameFromClickedImage(View v) { // FIXME: refactor hardcores later
         for (Map.Entry<String, ImageView> carNameMapObject : carNamesMap.entrySet()) {
             ImageView tempImageView = (ImageView) carNameMapObject.getValue();
 
-            if (tempImageView.equals(tempImageView)) {
-                return carNameMapObject.getKey();
+            if (tempImageView.equals(imageView1)) {
+                Log.i("INFO", "MATCHED!!! SELECTED CAR NAME IS: " + carNameMapObject.getKey());
+
+                return carNamesList.get(0);
+            } else if (tempImageView.equals(imageView2)) {
+                Log.i("INFO", "MATCHED!!! SELECTED CAR NAME IS: " + carNameMapObject.getKey());
+
+                return carNamesList.get(1);
+            } else if (tempImageView.equals(imageView3)) {
+                Log.i("INFO", "MATCHED!!! SELECTED CAR NAME IS: " + carNameMapObject.getKey());
+
+                return carNamesList.get(2);
             }
         }
         return null;
@@ -90,10 +106,12 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
         carNamesMap.put(carName1, imageView1);
         carNamesMap.put(carName2, imageView2);
         carNamesMap.put(carName3, imageView3);
+        carNamesList.add(carName1);
+        carNamesList.add(carName2);
+        carNamesList.add(carName3);
 
-        carNames[0] = carName1; carNames[1] = carName2; carNames[2] = carName3;
         // https://stackoverflow.com/questions/21726033/picking-a-random-item-from-an-array-of-strings-in-java/21726085
-        carNameToGuess = carNames[new Random().nextInt(carNames.length)];
+        carNameToGuess = carNamesList.get(new Random().nextInt(carNamesList.size()));
         carNameToGuessTextView.setText(carNameToGuess);
 
         if ((carName1 == null) && (carName2 == null) && (carName3 == null)) {
@@ -126,6 +144,9 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
         identifyButton.setText("IDENTIFY");
         hideCorrectMessage();
         hideErrorText();
+        carNameToGuess = "";
+        this.carNamesList.clear();
+        carNamesMap.clear();
         setupNextCarImage();
     }
 
@@ -140,26 +161,57 @@ public class CarImageIdentifyActivity extends AppCompatActivity {
             }
         });
 
-        ImageView[] imageViews = new ImageView[3];
-        imageViews[0] = imageView1; imageViews[1] = imageView2; imageViews[2] = imageView3;
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("INFO", "IMAGEVIEW 1 CLICKED");
 
-        for (ImageView imageView : imageViews) {
+                String selectedCarName = getCorrespondingCarNameFromClickedImage(v);
+                Log.i("INFO", "MATCHED!!! RETURNED CAR NAME IS: " + selectedCarName);
 
-            //https://stackoverflow.com/questions/7326601/android-imageview-on-click
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String selectedCarName = getCorrespondingCarNameFromClickedImage(v);
-                    if (selectedCarName == carNameToGuess) {
-                        showCorrectMessage();
-                    } else {
-                        showErrorText();
-                    }
-                    identifyButton.setText("NEXT");
+                if (selectedCarName == carNameToGuess) {
+                    showCorrectMessage();
+                } else {
+                    showErrorText();
                 }
-            });
-        }
+                identifyButton.setText("NEXT");
+            }
+        });
+
+        imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("INFO", "IMAGEVIEW 2 CLICKED");
+
+                String selectedCarName = getCorrespondingCarNameFromClickedImage(v);
+                Log.i("INFO", "MATCHED!!! RETURNED CAR NAME IS: " + selectedCarName);
+
+                if (selectedCarName == carNameToGuess) {
+                    showCorrectMessage();
+                } else {
+                    showErrorText();
+                }
+                identifyButton.setText("NEXT");
+            }
+        });
+
+        imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("INFO", "IMAGEVIEW 3 CLICKED");
+
+                String selectedCarName = getCorrespondingCarNameFromClickedImage(v);
+                Log.i("INFO", "MATCHED!!! RETURNED CAR NAME IS: " + selectedCarName);
+
+                if (selectedCarName == carNameToGuess) {
+                    showCorrectMessage();
+                } else {
+                    showErrorText();
+                }
+                identifyButton.setText("NEXT");
+            }
+        });
+
 
         identifyButton = findViewById(R.id.carImageIdentifyButton);
         identifyButton.setOnClickListener(new View.OnClickListener() {
