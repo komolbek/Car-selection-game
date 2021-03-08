@@ -153,6 +153,5 @@ public class CarMakeIdentifyActivity extends AppCompatActivity {
         resultTextView.setVisibility(View.INVISIBLE);
         resultCarNameTextView = findViewById(R.id.resultCarNameTextView);
         resultCarNameTextView.setVisibility(View.INVISIBLE);
-
     }
 }
